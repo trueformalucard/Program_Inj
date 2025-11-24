@@ -15,33 +15,26 @@
 знак "+" - задание выполнено; знак "-" - задание не выполнено;
 
 ## Самостоятельная работа №1
-### Найдите в интернете любую статью (объем статьи не менее 200 слов), скопируйте ее содержимое в файл и напишите программу, которая считает количество слов в текстовом файле и определит самое часто встречающееся слово. 
+### Создайте функцию fib(n), генерирующую n чисел Фибоначчи с минимальными затратами ресурсов. Для реализации этой функции потребуется обратиться к инструкции yield (Она не сохраняет в оперативной памяти огромную последовательность, а дает возможность “доставать” промежуточные результаты по одному). Результатом решения задачи будет листинг кода и вывод в консоль с числом Фибоначчи от 200.
 
 ```
-cwith open("article.txt", "r", encoding="utf-8") as file:
-    text = file.read()
+def fib(n):
+    a, b = 1, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
 
-words = text.split()
-words = [word.strip('.,!?;:"()').lower() for word in words]
+f200 = list(fib(200))[-1]
 
-total_words = len(words)
+for i, num in enumerate(fib(10), 1):
+    print(f"{i:2}: {num}")
 
-word_count = {}
-for word in words:
-    if word in word_count:
-        word_count[word] += 1
-    else:
-        word_count[word] = 1
-
-most_common_word = max(word_count, key=word_count.get)
-most_common_count = word_count[most_common_word]
-
-print(f"Общее количество слов: {total_words}")
-print(f"Самое часто встречающееся слово: '{most_common_word}' (встречается {most_common_count} раз)")
+print("\n200:")
+print(f200)
 
 ```
 ### Результат.
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam1.py)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab1.png)
 
 ## Выводы
 
