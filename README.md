@@ -15,7 +15,7 @@
 знак "+" - задание выполнено; знак "-" - задание не выполнено;
 
 ## Самостоятельная работа №1
-### Создайте функцию fib(n), генерирующую n чисел Фибоначчи с минимальными затратами ресурсов. Для реализации этой функции потребуется обратиться к инструкции yield (Она не сохраняет в оперативной памяти огромную последовательность, а дает возможность “доставать” промежуточные результаты по одному). Результатом решения задачи будет листинг кода и вывод в консоль с числом Фибоначчи от 200.
+### Создайте функцию fib(n), генерирующую n чисел Фибоначчи с минимальными затратами ресурсов. Для реализации этой функции потребуется обратиться к инструкции yield (Она не сохраняет в оперативной памяти огромную последовательность, а дает возможность “доставать” промежуточные результаты по одному). Результатом решения задачи будет листинг кода и вывод в консоль с числом Фибоначчи от 200
 
 ```
 def fib(n):
@@ -38,49 +38,25 @@ print(f200)
 
 ## Выводы
 
-with open() - открытие и автоматическое закрытие файла
-text.split() - разделение текста на слова
-max(word_count, key=word_count.get) - поиск самого частого слова
+Функция fib — это генератор, который выдаёт нужное количество чисел Фибоначчи по одному, используя yield
+В памяти хранятся только два числа, поэтому даже при больших n расход памяти минимальный
+Мы получили 200-е число, просто взяв последний элемент из списка 200 чисел
 
 ## Самостоятельная работа №2
-### Напишите программу для учета расходов. Программа должна позволять вводить информацию о расходах, сохранять ее в файл и выводить существующие данные в консоль.
+### К коду предыдущей задачи добавьте запоминание каждого числа Фибоначчи в файл “fib.txt”, при этом каждое число должно находиться на отдельной строчке. Результатом выполнения задачи будет листинг кода и скриншот получившегося файла
 
 ```
-def add_expense():
-    amount = input("Введите сумму расхода: ")
-    category = input("Введите категорию расхода: ")
-    
-    with open("expenses.txt", "a", encoding="utf-8") as file:
-        file.write(f"{amount} - {category}\n")
+def fib(n):
+    a, b = 1, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
 
-def show_expenses():
-    try:
-        with open("expenses.txt", "r", encoding="utf-8") as file:
-            expenses = file.readlines()
-            
-        if not expenses:
-            print("Расходы отсутствуют")
-            return
-            
-        print("Список расходов:")
-        for expense in expenses:
-            print(expense.strip())
-    except FileNotFoundError:
-        print("Файл с расходами не найден")
+with open("fib.txt", "w", encoding="utf-8") as файл:
+    for число in fib(200):
+        файл.write(str(число) + "\n")
 
-while True:
-    print("\n1 - Добавить расход")
-    print("2 - Показать расходы")
-    print("3 - Выйти")
-    
-    choice = input("Выберите действие: ")
-    
-    if choice == "1":
-        add_expense()
-    elif choice == "2":
-        show_expenses()
-    elif choice == "3":
-        break
+print("200:", list(fib(200))[-1])
 
 ```
 ### Результат.
@@ -92,7 +68,7 @@ file.write() - запись данных в файл
 file.readlines() - чтение всех строк из файлаю
 
 ## Самостоятельная работа №3
-### Имеется файл input.txt с текстом на латинице. Напишите программу, которая выводит статистику по тексту: количество букв латинского алфавита; число слов; число строк.
+### Имеется файл input.txt с текстом на латинице. Напишите программу, которая выводит статистику по тексту: количество букв латинского алфавита; число слов; число строк
 
 ```
 with open("input.txt", "r", encoding="utf-8") as file:
@@ -114,320 +90,123 @@ print(f"Input file contains:")
 print(f"{letter_count} letters")
 print(f"{word_count} words")
 print(f"{line_count} lines")
-
-
 ```
 ### Результат.
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam3.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab2.png)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab2.1.png)
 
 ## Выводы
-file.readlines() - чтение всех строк файла
-char.isalpha() - проверка является ли символ буквой
-line.split() - разделение строки на слова
-
-## Самостоятельная работа №4
-### Напишите программу, которая получает на вход предложение, выводит его в терминал, заменяя все запрещенные слова звездочками.
-
-```
-with open("input.txt", "r", encoding="utf-8") as file:
-    banned_words = file.read().split()
-
-
-text = "Hello, world! Python IS the programming language of thE future. My EMAIL is.... PYTHON is awesome!!!!!"
-
-
-for banned_word in banned_words:
-    start = 0
-    while start < len(text):
-
-        index = text.lower().find(banned_word.lower(), start)
-        if index == -1:
-            break
-
-        stars = '*' * len(banned_word)
-        text = text[:index] + stars + text[index + len(banned_word):]
-        start = index + len(stars)
-
-print("Результат:")
-print(text)
-
-
-```
-### Результат.
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam4.jpg)
-
-## Выводы
-file.read().split() - чтение запрещенных слов из файла в список
-text.lower().find() - поиск слова в тексте без учета регистра
-'*' * len(banned_word) - создание строки из звездочек одинаковой длины со словом
-
-## Самостоятельная работа №5
-### Напиши программу "Секретный дневник", которая позволяет записывать секретные сообщения в файл и читать их. Все сообщения хранятся в зашифрованном виде - каждая буква заменяется на следующую в алфавите.
-
-```
-def write_secret():
-    message = input("Введите секретное сообщение: ")
-
-    secret = ""
-    for char in message:
-        if char.isalpha():
-            if char.islower():
-                secret += chr((ord(char) - ord('a') + 1) % 26 + ord('a'))
-            else:
-                secret += chr((ord(char) - ord('A') + 1) % 26 + ord('A'))
-        else:
-            secret += char
-
-    with open("diary.txt", "a", encoding="utf-8") as file:
-        file.write(secret + "\n")
-    print("Сообщение записано в дневник!")
-
-
-def read_secrets():
-    try:
-        with open("diary.txt", "r", encoding="utf-8") as file:
-            secrets = file.readlines()
-
-        if not secrets:
-            print("Дневник пустой")
-            return
-
-        print("\nСекретные сообщения:")
-        for i, secret in enumerate(secrets, 1):
-            message = ""
-            for char in secret.strip():
-                if char.isalpha():
-                    if char.islower():
-                        message += chr((ord(char) - ord('a') - 1) % 26 + ord('a'))
-                    else:
-                        message += chr((ord(char) - ord('A') - 1) % 26 + ord('A'))
-                else:
-                    message += char
-            print(f"{i}. {message}")
-    except FileNotFoundError:
-        print("Дневник не найден")
-
-
-while True:
-    print("\n1 - Записать секрет")
-    print("2 - Прочитать секреты")
-    print("3 - Выйти")
-
-    choice = input("Выберите действие: ")
-
-    if choice == "1":
-        write_secret()
-    elif choice == "2":
-        read_secrets()
-    elif choice == "3":
-        break
-
-
-```
-### Результат.
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam5.jpg)
-
-## Выводы
-ord(char) - получение кода символа для шифрования
-chr(code) - преобразование кода обратно в символ
-open("diary.txt", "a") - добавление новых сообщений в файл
+Функция fib — это генератор, который выдаёт нужное количество чисел Фибоначчи по одному с помощью yield
+В памяти хранятся только два числа, поэтому расход ресурсов остаётся минимальным даже при больших значениях n
+Все 200 чисел последовательно записаны в файл fib.txt — каждое на отдельной строке
+200-е число Фибоначчи равно 280571172992510140037611932413038677189525
 
 ## Лабораторная работа №1
-### Составьте текстовый файл и положите его в одну директорию с программой на Python. Текстовый файл должен состоять минимум из двух строк.
+### Простой итератор, но у него нет гибкой настройки, например его нельзя развернуть. Он работает просто как next(), но нет prev()
 
 ```
-
+numbers = [0,1,2,3,4,5]
+for item in numbers:
+    print(item)
 ```
 ### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab1.jpg)
-
-
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/test1.png)
 
 ## Лабораторная работа №2
-### Напишите программу, которая выведет только первую строку из вашего файла, при этом используйте конструкцию open()/close().
+### Класс итератор с гибкой настройкой и удобными применением
 
 ```
-file = open("input.txt", "r", encoding="utf-8")
-first_line = file.readline()
-print(first_line)
-file.close()
+class CountDown:
+    def __init__(self,start):
+        self.count = start + 1
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        self.count -= 1
+        if self.count < 0:
+            raise StopIteration
+        return self.count
+    
+
+if __name__ == '__main__':
+    counter = CountDown(5)
+    for i in counter:
+        print(i)
+        
 
 ```
 ### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab2.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/test2.png)
 
 ## Выводы
-open("myfile.txt", "r") - открытие файла для чтения
-file.readline() - чтение первой строки
-file.close() - закрытие файла
+Метод __init__ задаёт начальное значение счётчика
+Метод __iter__ возвращает сам объект (self), благодаря чему класс становится итерируемым
+Метод __next__ содержит основную логику: уменьшает счётчик, возвращает текущее значение и выбрасывает StopIteration, когда доходим до 0 — именно это останавливает цикл for автоматически
 
 ## Лабораторная работа №3
-### Напишите программу, которая выведет все строки из вашего файла в массиве, при этом используйте конструкцию open()/close().
-
+### Генератор списка
 ```
-file = open("input.txt", "r", encoding="utf-8")
-lines = file.readlines()
-print(lines)
-file.close()
+a = [i ** 2 for i in range(1, 5)]
+
+print('a - ', a)
+for i in a:
+    print(i)
+
+print('inter(a) - ', iter(a))
+for i in a:
+    print(i)
 
 ```
 ### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab3.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/test3.png)
 
 ## Выводы
-file.readlines() - чтение всех строк в список
-print(lines) - вывод списка строк
-file.close() - закрытие файла
+a = [i ** 2 for i in range(1, 5)] создаёт список квадратов чисел — сам список является итерируемым объектом
+Функция iter(a) возвращает отдельный объект-итератор (типа list_iterator), который «помнит» своё текущее положение при проходе по элементам
+Циклы for i in a: используют этот механизм автоматически: Python внутри вызывает iter(a), а затем многократно вызывает __next__() у полученного итератора, пока не получит StopIteration
 
 ## Лабораторная работа №4
-### Напишите программу, которая выведет все строки из вашего файла в массиве, при этом используйте конструкцию with open().
+### Выражения генераторы
 
 ```
-with open("input.txt", "r", encoding="utf-8") as file:
-    lines = file.readlines()
-    print(lines)
-
-
+b = (i ** 2 for i in range(1, 5))
+print(b)
+print('first')
+for i in b:
+    print(i)
+print('second')
+for i in b:
+    print(i)
 ```
 ### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab4.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/test4.png)
 
 ## Выводы
-with open() - автоматическое закрытие файла
-file.readlines() - чтение всех строк
-Автоматическое управление ресурсами
+b = (i ** 2 for i in range(1, 5)) создаёт генератор
+first — выводит квадраты
+second — пустой, потому что генератор уже исчерпан
 
 ## Лабораторная работа №5
-### Напишите программу, которая выведет каждую строку из вашего файла отдельно, при этом используйте конструкцию with open().
+### Такой же счетчик, как и в первом задании, только это генератор и использует yield
 ```
-with open("input.txt", "r", encoding="utf-8") as file:
-    for line in file:
-        print(line.strip())
+def countdown(count):
+    while count >= 0:
+        yield count
+        count -= 1
 
 
-```
-### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab5.jpg)
-
-## Выводы
-for line in file: - построчное чтение файла
-line.strip() - удаление символов перевода строки
-
-## Лабораторная работа №6
-### Напишите программу, которая будет добавлять новую строку в ваш файл, а потом выведет полученный файл в консоль.
-```
-with open("input.txt", "a", encoding="utf-8") as file:
-    file.write("Новая добавленная строка\n")
-
-with open("input.txt", "r", encoding="utf-8") as file:
-    content = file.read()
-    print(content)
-
-
+if __name__ == '__main__':
+    counter = countdown(5)
+    for i in counter:
+        print(i)
 ```
 ### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab6.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/test5.png)
 
 ## Выводы
-open("myfile.txt", "a") - добавление данных в файл
-file.write() - запись новой строки
-file.read() - чтение всего содержимого
-
-## Лабораторная работа №7
-### Напишите программу, которая перепишет всю информацию, которая была у вас в файле до этого.
-```
-lines = ['one', 'two', 'three']
-with open('myfile.txt', 'w', encoding="utf-8") as file:
-    for line in lines:
-        file.write('Cycle run ' + line + '\n')
-
-with open('myfile.txt', 'r', encoding="utf-8") as file:
-    print(file.read())
-
-
-```
-### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab7.jpg)
-
-## Выводы
-open("myfile.txt", "w") - перезапись файла
-цикл for для записи списка
-file.read() - проверка результата
-
-## Лабораторная работа №8
-### Выберите любую папку на своем компьютере, имеющую вложенные директории. Выведите на печать в терминал ее содержимое, как и всех подкаталогов при помощи функции print_docs(directory).
-```
-import os
-
-def print_docs(directory):
-    all_files = os.walk(directory)
-    for catalog in all_files:
-        print(f'Папка {catalog[0]} содержит:')
-        print(f'Директории: {", ".join([folder for folder in catalog[1]])}')
-        print(f'Файлы: {", ".join([file for file in catalog[2]])}')
-        print('.' * 40)
-
-print_docs('C:/Users/GPC/Desktop')
-
-
-```
-### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab8.jpg)
-
-## Выводы
-os.walk(directory) - обход всех папок и файлов
-catalog[1] - список поддиректорий
-catalog[2] - список файлов в директории
-
-## Лабораторная работа №9
-### Реализовать функцию, которая выводит слово, имеющее максимальную длину (или список слов, если таковых несколько).
-```
-def find_longest_words():
-    with open("input.txt", "r", encoding="utf-8") as file:
-        words = file.read().split()
-
-    max_length = max(len(word) for word in words)
-    longest_words = [word for word in words if len(word) == max_length]
-
-    print("Слова с максимальной длиной:")
-    for word in longest_words:
-        print(word)
-
-
-find_longest_words()
-
-
-
-```
-### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab9.jpg)
-
-## Выводы
-file.read().split() - чтение и разделение на слова
-max(len(word)) - поиск максимальной длины
-Списочное выражение для фильтрации слов
-
-## Лабораторная работа №10
-### Создать csv-файл «rows_300.csv» со столбцами: №, Секунда, Микросекунда.
-```
-import csv
-import datetime
-import time
-
-with open('rows_300.csv', 'w', encoding='utf-8', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['№', 'Секунда', 'Микросекунда'])
-
-    for i in range(1, 301):
-        writer.writerow([i, datetime.datetime.now().second, datetime.datetime.now().microsecond])
-        time.sleep(0.01)
-
-
-```
-### Результат.
-![Меню](https://github.com/paiNy66/proggramnaya-injeneriya/blob/Тема_7/lab10.jpg)
-
-## Выводы
-csv.writer() - создание writer для CSV
-datetime.datetime.now() - получение текущего времени
-time.sleep(0.01) - искусственная задержка
+Функция countdown реализована как генератор с помощью yield
+В цикле while count > 0 она по одному выдаёт числа от заданного значения до 1, а затем 0
+Благодаря yield функция не создаёт список в памяти, а генерирует значения «на лету» — это экономит память и делает код лаконичным
+При запуске через for i in counter: цикл автоматически получает значения по одному, пока генератор не завершится
