@@ -60,8 +60,8 @@ print("200:", list(fib(200))[-1])
 
 ```
 ### Результат.
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam2.jpg)
-![Меню](https://github.com/trueformalucard/-_7/blob/main/sam2.1.jpg)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab1.png)
+![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab2.1.png)
 
 ## Выводы
 open("expenses.txt", "a") - открытие файла для добавления данных
