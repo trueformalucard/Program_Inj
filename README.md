@@ -61,45 +61,12 @@ print("200:", list(fib(200))[-1])
 ```
 ### Результат.
 ![Меню](https://github.com/trueformalucard/-_7/blob/main/sam2.jpg)
+![Меню](https://github.com/trueformalucard/-_7/blob/main/sam2.1.jpg)
 
 ## Выводы
 open("expenses.txt", "a") - открытие файла для добавления данных
 file.write() - запись данных в файл
 file.readlines() - чтение всех строк из файлаю
-
-## Самостоятельная работа №3
-### Имеется файл input.txt с текстом на латинице. Напишите программу, которая выводит статистику по тексту: количество букв латинского алфавита; число слов; число строк
-
-```
-with open("input.txt", "r", encoding="utf-8") as file:
-    lines = file.readlines()
-
-letter_count = 0
-word_count = 0
-line_count = len(lines)
-
-for line in lines:
-    for char in line:
-        if char.isalpha() and char.isascii():
-            letter_count += 1
-    
-    words = line.split()
-    word_count += len(words)
-
-print(f"Input file contains:")
-print(f"{letter_count} letters")
-print(f"{word_count} words")
-print(f"{line_count} lines")
-```
-### Результат.
-![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab2.png)
-![Меню](https://github.com/trueformalucard/Program_Inj/blob/Theme_11/samrab2.1.png)
-
-## Выводы
-Функция fib — это генератор, который выдаёт нужное количество чисел Фибоначчи по одному с помощью yield
-В памяти хранятся только два числа, поэтому расход ресурсов остаётся минимальным даже при больших значениях n
-Все 200 чисел последовательно записаны в файл fib.txt — каждое на отдельной строке
-200-е число Фибоначчи равно 280571172992510140037611932413038677189525
 
 ## Лабораторная работа №1
 ### Простой итератор, но у него нет гибкой настройки, например его нельзя развернуть. Он работает просто как next(), но нет prev()
